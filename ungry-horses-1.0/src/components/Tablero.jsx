@@ -29,20 +29,35 @@ const estilos = makeStyles((theme) => ({
     ficha_c: {
         width: '80px',
         height: '80px',
-        backgroundColor: '#00FBFF',
+        backgroundColor: '#A163EB',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
 
     },
-    jugador:{
+    jugador: {
 
         width: '80px',
         height: '80px',
-        backgroundColor: '#red',
+
         display: 'flex',
-        alignItems: 'center',
+        backgroundColor: 'white',
         justifyContent: 'center'
+
+
+
+    },
+
+    pasto: {
+
+        width: '80px',
+        height: '80px',
+
+        display: 'flex',
+        backgroundColor: 'white',
+        justifyContent: 'center'
+
+
 
     }
 }))
@@ -51,10 +66,10 @@ const estilos = makeStyles((theme) => ({
 export const Tablero = (ficha) => {
 
     const [casillas, setCasillas] = useState(tableroInicial)
-    let eligiendo=false
-    let moves=[]
+    let eligiendo = false
+    let moves = []
 
-    
+
     const forceUpdate = React.useState()[1].bind(null, {}) // see NOTE above const forceUpdate = React.useReducer(() => ({}))[1]
 
 
@@ -64,99 +79,110 @@ export const Tablero = (ficha) => {
         const y = parseInt(e.currentTarget.getAttribute('pos_y'))
 
         let movimientos = [
-            [x - 1,y -2],
-            [x - 1,y +2],
-            [x + 1,y -2],
-            [x + 1,y +2],
-            [x - 2,y -1],
-            [x - 2,y +1],
-            [x + 2,y -1],
-            [x + 2,y +1]
+            [x - 1, y - 2],
+            [x - 1, y + 2],
+            [x + 1, y - 2],
+            [x + 1, y + 2],
+            [x - 2, y - 1], 
+            [x - 2, y + 1],
+            [x + 2, y - 1],
+            [x + 2, y + 1]
         ]
 
-        let movimientosValidos=[]
+        let movimientosValidos = []
 
 
-        if (eligiendo){}
+        if (eligiendo) { }
         movimientos.forEach(element => {
-            if (element[0]>=0 && 
-                element[0]<=7 && 
-                element[1]>=0 && 
-                element[1]<=7 ) {
+            if (element[0] >= 0 &&
+                element[0] <= 7 &&
+                element[1] >= 0 &&
+                element[1] <= 7) {
                 movimientosValidos.push(element)
             }
         });
 
 
-        moves=movimientosValidos
+        moves = movimientosValidos
         console.log(moves)
-        eligiendo=true
+        eligiendo = true
         marcarMovimientos()
-        
-        
+
+
     }
 
 
 
 
-    const marcarMovimientos=()=>{
+    const marcarMovimientos = () => {
 
-        let tableroActual=tableroInicial
+        let tableroActual = tableroInicial
 
-        if(eligiendo){
+        if (eligiendo) {
 
-       for (let i = 0; i < moves.length; i++) {
-            tableroActual[buscarEnTablero(moves[i][0],moves[i][1])].estado='candidato'     
+            for (let i = 0; i < moves.length; i++) {
+                if (tableroActual[buscarEnTablero(moves[i][0], moves[i][1])].estado == 'pasto') {
+                    tableroActual[buscarEnTablero(moves[i][0], moves[i][1])].estado = 'pastoSeleccionado'
+
+                } if (tableroActual[buscarEnTablero(moves[i][0], moves[i][1])].estado == 'inactivo'){
+                    tableroActual[buscarEnTablero(moves[i][0], moves[i][1])].estado = 'candidato'
+
+                }
+
+
+            }
+            setCasillas(tableroActual)
+            console.log(tableroActual)
+            forceUpdate()
         }
-        setCasillas(tableroActual)
-        console.log(tableroActual)
-        forceUpdate()
-    }
-       
-        
+
+
 
     }
 
-    const limpiaMarcas = () =>{
+    const limpiaMarcas = () => {
         tableroInicial.forEach(element => {
-            if (element.estado=='candidato') {
-                element.estado='inactivo'
+            if (element.estado == 'candidato') {
+                element.estado = 'inactivo'
+            }if(element.estado=='pastoSeleccionado'){
+                element.estado='pasto'
             }
         });
 
-        moves=[]
+        moves = []
     }
 
 
-    const moverJugador=(event)=>{
-
-        
-
-        const x=parseInt(event.currentTarget.getAttribute('pos_x'))
-        const y=parseInt(event.currentTarget.getAttribute('pos_y'))
+    const moverJugador = (event) => {
 
 
-        tableroInicial[buscarEnTablero(jugador.posicion.x,jugador.posicion.y)]={
-                posicion:{
-                    x:jugador.posicion.x,
-                    y:jugador.posicion.y
-                },
-                tipo:'vacio',
-                estado:'inactivo'
-            }
 
-        tableroInicial[buscarEnTablero(x,y)]=jugador
-        jugador.posicion.x=x
-        jugador.posicion.y=y
-        moves=[]
+        const x = parseInt(event.currentTarget.getAttribute('pos_x'))
+        const y = parseInt(event.currentTarget.getAttribute('pos_y'))
+
+
+        tableroInicial[buscarEnTablero(jugador.posicion.x, jugador.posicion.y)] = {
+            posicion: {
+                x: jugador.posicion.x,
+                y: jugador.posicion.y
+            },
+            tipo: 'vacio',
+            estado: 'inactivo'
+        }
+
+        tableroInicial[buscarEnTablero(x, y)] = jugador
+        jugador.posicion.x = x
+        jugador.posicion.y = y
+
+        moves = []
         limpiaMarcas()
-        
+
         forceUpdate()
-        
 
 
 
-        
+
+
 
 
 
@@ -171,37 +197,61 @@ export const Tablero = (ficha) => {
 
     const classes = estilos()
 
-    
+
     return (
 
         <div container spacing={0} className={classes.tablero}>
             {casillas.map(elemento => {
                 return (
 
-                    elemento.estado=='inactivo' ? <Button className={classes.ficha} key={`${elemento.posicion.x} , ${elemento.posicion.y}`}
+                    elemento.estado == 'inactivo' ? <Button className={classes.ficha} key={`${elemento.posicion.x} , ${elemento.posicion.y}`}
                         pos_x={elemento.posicion.x}
                         pos_y={elemento.posicion.y}
-                        >
+                    >
+                    </Button> : elemento == jugador ?
 
-                        {/* {elemento.posicion.x} , {elemento.posicion.y} , {elemento.estado} */}
+                        <Button className={classes.jugador} key={`${elemento.posicion.x} , ${elemento.posicion.y}`}
+                            pos_x={elemento.posicion.x}
+                            pos_y={elemento.posicion.y}
+                            onClick={posiblesMovimientos}>
+                            <img src={require('../img/jugador.png')} alt="" className={classes.jugador} />
 
-                    </Button>  : elemento==jugador?
-                    
-                    <Button className={classes.jugador} key={`${elemento.posicion.x} , ${elemento.posicion.y}`}
-                        pos_x={elemento.posicion.x}
-                        pos_y={elemento.posicion.y}
-                        onClick={posiblesMovimientos}>
-                         {/* {elemento.posicion.x} , {elemento.posicion.y} , {elemento.estado} */}
+                        </Button> : elemento.estado == 'pasto' ?
 
-                    </Button> :
-                    
-                    <Button className={classes.ficha_c} key={`${elemento.posicion.x} , ${elemento.posicion.y}`}
-                    pos_x={elemento.posicion.x}
-                    pos_y={elemento.posicion.y}
-                    onClick={moverJugador}>
-                     {/* {elemento.posicion.x} , {elemento.posicion.y} , {elemento.estado} */}
+                            <Button
 
-                </Button>
+                                className={classes.pasto} key={`${elemento.posicion.x} , ${elemento.posicion.y}`}
+                                pos_x={elemento.posicion.x}
+                                pos_y={elemento.posicion.y}
+                               >
+                                <img src={require("../img/manzana.gif")} alt="" className={classes.pasto} />
+
+                            </Button> : elemento.estado == 'pastoSeleccionado' ?
+
+                                <Button
+
+                                    className={classes.pasto} key={`${elemento.posicion.x} , ${elemento.posicion.y}`}
+                                    pos_x={elemento.posicion.x}
+                                    pos_y={elemento.posicion.y}
+                                    onClick={moverJugador}>
+                                    <img src={require("../img/manzana.gif")} alt="" className={classes.ficha_c} />
+
+                                </Button>
+
+
+
+                                :
+                                <Button
+
+                                    className={classes.ficha_c} key={`${elemento.posicion.x} , ${elemento.posicion.y}`}
+                                    pos_x={elemento.posicion.x}
+                                    pos_y={elemento.posicion.y}
+                                    onClick={moverJugador}>
+                                    <img src={require("../img/movimiento.gif")} alt="" className={classes.ficha_c} />
+
+                                </Button>
+
+
                 )
             })}
 

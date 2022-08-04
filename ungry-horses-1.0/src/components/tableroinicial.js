@@ -46,5 +46,26 @@ const buscarEnTablero=(posx,posy)=>{
 llenarTablero()
 tableroInicial[buscarEnTablero(jugador.posicion.x,jugador.posicion.y)]=jugador
 
+tableroInicial[buscarEnTablero(4,3)]={
+    posicion:{
+        x:4,
+        y:3
+    },
+    tipo:'vacio',
+    estado:'pasto'
+}
+
+
+tableroInicial[buscarEnTablero(3,5)]={
+    posicion:{
+        x:3,
+        y:5
+    },
+    tipo:'vacio',
+    estado:'pasto'
+}
+
+
+
 
 export {tableroInicial,buscarEnTablero,jugador}
