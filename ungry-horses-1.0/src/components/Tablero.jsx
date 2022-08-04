@@ -29,7 +29,7 @@ const estilos = makeStyles((theme) => ({
     ficha_c: {
         width: '80px',
         height: '80px',
-        backgroundColor: '#A163EB',
+        backgroundColor: '#fff',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
