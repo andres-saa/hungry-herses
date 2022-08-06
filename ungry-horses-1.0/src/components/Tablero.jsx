@@ -160,7 +160,7 @@ export const Tablero = (casilla) => {
                     return value
         */
         if (depth === 0 || node     )
-            return minimizingPlayer.puntos
+            return pc.puntos
         if minimizingPlayer {
             var value = Number.NEGATIVE_INFINITY;
             for (var i=0; i<children.length; i++){
