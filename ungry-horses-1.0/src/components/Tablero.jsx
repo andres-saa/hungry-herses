@@ -160,7 +160,7 @@ export const Tablero = (casilla) => {
                     return value
         */
 
-        var children = movimientosValidos;
+        var children = node.movimientosDisponibles
 
         // Sort moves randomly, so the same move isn't always picked on ties
         children.sort(function(a, b){return 0.5 - Math.random()});
@@ -182,8 +182,7 @@ export const Tablero = (casilla) => {
         }
     }
 
-    const inteligencia=()=>{
-
+    const inteligencia = () => {
 
         const movimientos=pc.movimientosDisponibles
         let movimientosQueDanPuntos=[]
