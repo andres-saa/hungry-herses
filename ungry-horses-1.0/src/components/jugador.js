@@ -1,14 +1,25 @@
 import React from "react"
+import { buscarEnTablero } from "./tableroinicial"
 
-const jugador={
-    nombre:"jugador",
-    posicion:{
-        x:7,
-        y:4
-    },
-    tipo:'vacio',
-    estado:'jugador'
+import { tableroInicial } from "./tableroinicial"
+
+class Jugador{
+
+    constructor(nombre,posicion,puntos){
+
+        this.nombre=nombre
+        this.posicion={
+            x:posicion[0],
+            y:posicion[1]
+        }
+        this.puntos=puntos
+        this.imagen=require(`../img/${nombre}.png`)
+        this.movimientosDisponibles=[]
+        this.turno=false
+    }
+
 }
 
 
-export default jugador
+
+export default Jugador

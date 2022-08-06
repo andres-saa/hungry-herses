@@ -1,71 +1,159 @@
 
 
 
-import jugador from "./jugador"
+import Jugador from "./jugador"
+import Casilla  from "./casilla"
+import Item from "./item"
+import { sound_caminar } from "./sonido"
+
+
+
 let tableroInicial =[]
+const jugador= new Jugador('jugador',[0,0],0)
+const pc= new Jugador('pc',[0,0],0)
+
+jugador.turno=true
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
+
+
+  const buscarEnTablero=(posx,posy)=>{
+    let posicion=0
+    for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; i++) {
+            if (tableroInicial[posicion].posicion.x == posx && tableroInicial[posicion].posicion.y==posy){
+                return posicion
+            }else{
+                posicion++
+            }
+        }
+    }
+
+}
+
+
+
 
 const llenarTablero = ()=>{
 
     const fichas = []
+
+    let cantidadManzanas = 2
+    let cantidadPasto = 14
+    let cantidadFlores=5
+    let numeroJudadores=2
+
+    
+
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
 
-            fichas.push({
-                posicion:{
-                    x:i,
-                    y:j
-                },
-                tipo:'vacio',
-                estado:'inactivo'
-            })
+            fichas.push(
+                new Casilla([i,j],'inactivo')
+            )
 
         }
     }
 
     tableroInicial=fichas
-}
 
-const buscarEnTablero=(posx,posy)=>{
-    let posicion=0
-    for (let i = 0; i < 8; i++) {
-        for (let j = 0; j < 8; i++) {
-            if (tableroInicial[posicion].posicion.x === posx && tableroInicial[posicion].posicion.y===posy){
-                return posicion
-            }else{
-                posicion++
-            }
 
+    // meter manzanas
+
+
+
+
+    while (cantidadManzanas > 0){
+
+       const i=getRandomInt(8)
+       const j=getRandomInt(8)
+
+        if (
+            !(tableroInicial[buscarEnTablero(i,j)] instanceof Item) && 
+            !(tableroInicial[buscarEnTablero(i,j)] instanceof Jugador) ) {
+                tableroInicial[buscarEnTablero(i,j)]=new Item ([i,j],'manzana','inicial',9)
+            cantidadManzanas--
         }
-        
-        
     }
-    
+
+
+    while (cantidadPasto > -1){
+        const i=getRandomInt(8)
+        const j=getRandomInt(8)
+         if (
+             !(tableroInicial[buscarEnTablero(i,j)] instanceof Item) && 
+             !(tableroInicial[buscarEnTablero(i,j)] instanceof Jugador) ) {
+                 tableroInicial[buscarEnTablero(i,j)]=new Item ([i,j],'pasto','inicial',8)
+             cantidadPasto--
+         }
+     }
+
+     while (cantidadFlores > 0){
+
+        const i=getRandomInt(8)
+        const j=getRandomInt(8)
+ 
+         if (
+             !(tableroInicial[buscarEnTablero(i,j)] instanceof Item) && 
+             !(tableroInicial[buscarEnTablero(i,j)] instanceof Jugador) ) {
+                 tableroInicial[buscarEnTablero(i,j)]=new Item ([i,j],'flor','inicial',6)
+             cantidadFlores--
+         }
+ 
+     }
+
+
+
+    while (numeroJudadores > 1){
+
+        const i=getRandomInt(8)
+        const j=getRandomInt(8)
+ 
+         if (
+             !(tableroInicial[buscarEnTablero(i,j)] instanceof Item)) {
+                jugador.posicion={x:i,y:j}
+                 tableroInicial[buscarEnTablero(i,j)]=jugador
+             numeroJudadores--
+         }
+    }
+
+
+    while (numeroJudadores>0){
+
+        const i=getRandomInt(8)
+        const j=getRandomInt(8)
+ 
+         if (
+             !(tableroInicial[buscarEnTablero(i,j)] instanceof Item)) {
+                pc.posicion={x:i,y:j}
+                 tableroInicial[buscarEnTablero(i,j)]=pc
+             numeroJudadores--
+         }
+    }
+
+
 }
+
 
 
 llenarTablero()
-tableroInicial[buscarEnTablero(jugador.posicion.x,jugador.posicion.y)]=jugador
-
-tableroInicial[buscarEnTablero(4,3)]={
-    posicion:{
-        x:4,
-        y:3
-    },
-    tipo:'vacio',
-    estado:'pasto'
-}
-
-
-tableroInicial[buscarEnTablero(3,5)]={
-    posicion:{
-        x:3,
-        y:5
-    },
-    tipo:'vacio',
-    estado:'pasto'
-}
 
 
 
 
-export {tableroInicial,buscarEnTablero,jugador}
+
+// tableroInicial[buscarEnTablero(3,5)]={
+//     posicion:{
+//         x:3,
+//         y:5
+//     },
+//     tipo:'vacio',
+//     estado:'pasto'
+// }
+
+
+
+
+export {tableroInicial,buscarEnTablero,jugador,pc}
