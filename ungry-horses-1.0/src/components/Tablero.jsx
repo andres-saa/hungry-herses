@@ -159,7 +159,13 @@ export const Tablero = (casilla) => {
                         value := min( value, minimax( child, depth − 1, TRUE ) )
                     return value
         */
-        if (depth === 0 || node )
+
+        var children = movimientosValidos;
+
+        // Sort moves randomly, so the same move isn't always picked on ties
+        children.sort(function(a, b){return 0.5 - Math.random()});
+
+        if (depth === 0 || puntosPorJugar.total === 0)
             return pc.puntos
         if (minimizingPlayer) {
             var value = Number.NEGATIVE_INFINITY;
