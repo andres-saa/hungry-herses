@@ -12,6 +12,15 @@ let tableroInicial =[]
 const jugador= new Jugador('jugador',[0,0],0)
 const pc= new Jugador('pc',[0,0],0)
 
+
+const puntosPorJugar={
+    manzanas:2,
+    pasto:14,
+    flores:5,
+    total:manzanas+pasto+flores
+}
+
+
 jugador.turno=true
 
 function getRandomInt(max) {
@@ -156,4 +165,4 @@ llenarTablero()
 
 
 
-export {tableroInicial,buscarEnTablero,jugador,pc}
+export {tableroInicial,buscarEnTablero,jugador,pc,puntosPorJugar}

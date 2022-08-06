@@ -1,7 +1,7 @@
 import React, {  useRef } from "react";
 import { Button,} from "@material-ui/core";
 import { useState } from "react";
-import { tableroInicial, buscarEnTablero, getRandomInt } from "./tableroinicial";
+import { tableroInicial, buscarEnTablero, getRandomInt, puntosPorJugar } from "./tableroinicial";
 import { jugador, pc } from "./tableroinicial";
 import Item from "./item";
 import Casilla from "./casilla";
@@ -159,9 +159,9 @@ export const Tablero = (casilla) => {
                         value := min( value, minimax( child, depth − 1, TRUE ) )
                     return value
         */
-        if (depth === 0 || node     )
+        if (depth === 0 || node )
             return pc.puntos
-        if minimizingPlayer {
+        if (minimizingPlayer) {
             var value = Number.NEGATIVE_INFINITY;
             for (var i=0; i<children.length; i++){
                 value = Math.max(value, minimax(child, depth-1, FALSE))
@@ -231,6 +231,17 @@ export const Tablero = (casilla) => {
         pc.posicion.y=y
 
         pc.puntos+=puntosGanados
+
+
+
+        if (destino.tipo=='manzana')
+        puntosPorJugar.manzanas-=puntosGanados
+        else if (destino.tipo=='pasto')
+        puntosPorJugar.pasto-=puntosGanados
+        else if (destino.tipo=='flor')
+        puntosPorJugar.flores-=puntosGanados
+
+
         pc.movimientosDisponibles=[]
         
 
@@ -333,6 +344,17 @@ export const Tablero = (casilla) => {
             limpiaMarcas()
             pc.turno=true
             jugador.turno=false
+
+
+            if (tipo=='manzana')
+            puntosPorJugar.manzanas-=puntosGanados
+            else if (tipo=='pasto')
+            puntosPorJugar.pasto-=puntosGanados
+            else if (tipo=='flor')
+            puntosPorJugar.flores-=puntosGanados
+
+            
+
             jugarPc()
             
             }
