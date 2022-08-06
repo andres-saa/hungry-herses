@@ -136,8 +136,14 @@ export const Tablero = (casilla) => {
 
     }
 
-    const inteligencia=()=>{
 
+    const minimax = (node, depth, minimizingPlayer) => {
+
+        /*
+            Césped: 1 pto,
+            Flor: 2 ptos,
+            Manzana: 5 ptos 
+        */
         /*
             function  minimax( node, depth, maximizingPlayer ) is
                 if depth = 0 or node is a terminal node then
@@ -153,6 +159,24 @@ export const Tablero = (casilla) => {
                         value := min( value, minimax( child, depth − 1, TRUE ) )
                     return value
         */
+        if (depth === 0 || node     )
+            return minimizingPlayer.puntos
+        if minimizingPlayer {
+            var value = Number.NEGATIVE_INFINITY;
+            for (var i=0; i<children.length; i++){
+                value = Math.max(value, minimax(child, depth-1, FALSE))
+            return value
+            }
+        } else {
+            var value = Number.NEGATIVE_INFINITY;
+            for (var i=0; i<children.length; i++){
+                value = Math.min(value, minimax(child, depth-1, TRUE))
+            return value
+            }
+        }
+    }
+
+    const inteligencia=()=>{
 
 
         const movimientos=pc.movimientosDisponibles
