@@ -168,7 +168,7 @@ export const Tablero = (casilla) => {
             return value
             }
         } else {
-            var value = Number.NEGATIVE_INFINITY;
+            var value = Number.POSITIVE_INFINITY;
             for (var i=0; i<children.length; i++){
                 value = Math.min(value, minimax(child, depth-1, TRUE))
             return value
