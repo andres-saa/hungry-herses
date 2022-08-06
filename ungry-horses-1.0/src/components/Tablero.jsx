@@ -10,13 +10,6 @@ import Jugador from "./jugador";
 import { Howl } from "howler";
 
 
-
-
-
-
-
-
-
 export const Tablero = (casilla) => {
 
     const [casillas, setCasillas] = useState(tableroInicial)
@@ -33,20 +26,7 @@ export const Tablero = (casilla) => {
     const forceUpdate = React.useState()[1].bind(null, {}) // see NOTE above const forceUpdate = React.useReducer(() => ({}))[1]
 
 
-
-
-
-
-
-
-
-
-
     const posiblesMovimientos = (e) => {
-
-        
-
-        
 
         if (jugador.turno){
 
@@ -88,26 +68,17 @@ export const Tablero = (casilla) => {
         jugador.movimientosDisponibles = movimientosValidos
  
 
-
-
         marcarMovimientos()
         
-
-        }
-        
+        }       
     }
 
-
-
-
-   const  posiblesMovimientosPc = () =>{
+    const  posiblesMovimientosPc = () =>{
 
 
     const x=parseInt(jugadorPc.current.getAttribute('pos_x'))
     const y=parseInt(jugadorPc.current.getAttribute('pos_y'))
 
-
-    
 
     console.log(y)
     console.log(x)
@@ -145,10 +116,7 @@ export const Tablero = (casilla) => {
 
     pc.movimientosDisponibles = movimientosValidos
 
-
-
    }
-
 
     const jugarPc=()=>{
 
@@ -170,13 +138,29 @@ export const Tablero = (casilla) => {
 
     const inteligencia=()=>{
 
+        /*
+            function  minimax( node, depth, maximizingPlayer ) is
+                if depth = 0 or node is a terminal node then
+                    return the heuristic value of node
+                if maximizingPlayer then
+                    value := −∞
+                    for each child of node do
+                        value := max(value, minimax(child, depth − 1, FALSE))
+                    return value
+                else (* minimizing player *)
+                    value := +∞
+                    for each child of node do
+                        value := min( value, minimax( child, depth − 1, TRUE ) )
+                    return value
+        */
+
+
         const movimientos=pc.movimientosDisponibles
         let movimientosQueDanPuntos=[]
         let movimientosDeEstrategia=[]
         let movimientoElegido=[]
 
         movimientos.forEach(movimiento => {
-
 
             if (tableroInicial[buscarEnTablero(
                 movimiento[0],
@@ -193,9 +177,6 @@ export const Tablero = (casilla) => {
             moverPc(movimientosQueDanPuntos[0])
         }
     }
-
-
-
 
     const moverPc=(pos)=>{
 
@@ -234,11 +215,7 @@ export const Tablero = (casilla) => {
         pc.turno=false
         jugador.turno=true
 
-
-
     }
-
-    
 
     const marcarMovimientos = () => {
 
@@ -278,11 +255,7 @@ export const Tablero = (casilla) => {
             forceUpdate()
         }
 
-
-
     }
-
-
 
     const limpiaMarcas = () => {
 
@@ -298,8 +271,6 @@ export const Tablero = (casilla) => {
 
     }
 
-
-
     const moverJugador = (event) => {
 
 
@@ -314,9 +285,7 @@ export const Tablero = (casilla) => {
             if (tipo == 'manzana' || tipo == 'pasto' || tipo == 'flor') {
                 puntosGanados = parseInt(event.currentTarget.getAttribute('valor'))
             }
-    
-
-            
+               
 
             tableroInicial[buscarEnTablero(jugador.posicion.x, jugador.posicion.y)] =
 
@@ -345,13 +314,7 @@ export const Tablero = (casilla) => {
             }
     }
 
-
-
-
-
     return (
-
-
 
         <>
             <div className={classes.info}>
@@ -489,8 +452,6 @@ export const Tablero = (casilla) => {
 
                                             </Button>
 
-
-
                                             :
                                             <Button
 
@@ -502,11 +463,8 @@ export const Tablero = (casilla) => {
 
                                             </Button>
 
-
                     )
                 })}
-
-
 
             </div>
 
