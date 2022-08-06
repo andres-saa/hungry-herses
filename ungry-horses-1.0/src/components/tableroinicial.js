@@ -14,9 +14,9 @@ const pc= new Jugador('pc',[0,0],0)
 
 
 const puntosPorJugar={
-    manzanas:2,
+    manzanas:2*5,
     pasto:14,
-    flores:5,
+    flores:5*3,
     total:manzanas+pasto+flores
 }
 
@@ -82,7 +82,7 @@ const llenarTablero = ()=>{
         if (
             !(tableroInicial[buscarEnTablero(i,j)] instanceof Item) && 
             !(tableroInicial[buscarEnTablero(i,j)] instanceof Jugador) ) {
-                tableroInicial[buscarEnTablero(i,j)]=new Item ([i,j],'manzana','inicial',9)
+                tableroInicial[buscarEnTablero(i,j)]=new Item ([i,j],'manzana','inicial',5)
             cantidadManzanas--
         }
     }
@@ -94,7 +94,7 @@ const llenarTablero = ()=>{
          if (
              !(tableroInicial[buscarEnTablero(i,j)] instanceof Item) && 
              !(tableroInicial[buscarEnTablero(i,j)] instanceof Jugador) ) {
-                 tableroInicial[buscarEnTablero(i,j)]=new Item ([i,j],'pasto','inicial',8)
+                 tableroInicial[buscarEnTablero(i,j)]=new Item ([i,j],'pasto','inicial',1)
              cantidadPasto--
          }
      }
@@ -107,7 +107,7 @@ const llenarTablero = ()=>{
          if (
              !(tableroInicial[buscarEnTablero(i,j)] instanceof Item) && 
              !(tableroInicial[buscarEnTablero(i,j)] instanceof Jugador) ) {
-                 tableroInicial[buscarEnTablero(i,j)]=new Item ([i,j],'flor','inicial',6)
+                 tableroInicial[buscarEnTablero(i,j)]=new Item ([i,j],'flor','inicial',3)
              cantidadFlores--
          }
  
